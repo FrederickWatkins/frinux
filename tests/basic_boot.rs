@@ -4,7 +4,7 @@
 #![test_runner(frinux::qemu_test::test_runner)]
 #![reexport_test_harness_main = "test_main"]
 
-use frinux;
+use frinux::*;
 
 // The entry point for the OS
 #[no_mangle]
@@ -16,5 +16,5 @@ pub extern "C" fn _start() -> ! {
 
 #[test_case]
 fn test_println() {
-    frinux::println!("test println output");
+    println!("test println output");
 }
