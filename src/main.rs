@@ -4,11 +4,7 @@
 #![test_runner(qemu_test::test_runner)]
 #![reexport_test_harness_main = "test_main"]
 
-#[cfg(not(test))]
-use core::panic::PanicInfo;
-
-mod qemu_test;
-mod io;
+use frinux::*;
 
 // The entry point for the OS
 #[no_mangle]
@@ -22,11 +18,4 @@ pub extern "C" fn _start() -> ! {
         .set_color(io::vga_buffer::Color::Black, io::vga_buffer::Color::White);
     println!("This should be a different colour now");
     panic!("Test panic");
-}
-
-#[cfg(not(test))]
-#[panic_handler]
-fn panic(info: &PanicInfo) -> ! {
-    println!("{}", info);
-    loop {}
 }
