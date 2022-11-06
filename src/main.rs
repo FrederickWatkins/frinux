@@ -8,7 +8,7 @@
 use core::panic::PanicInfo;
 
 mod qemu_test;
-mod vga_buffer;
+mod io;
 
 // The entry point for the OS
 #[no_mangle]
@@ -17,9 +17,9 @@ pub extern "C" fn _start() -> ! {
     test_main();
 
     println!("Yabba dabba doo!");
-    vga_buffer::WRITER
+    io::vga_buffer::WRITER
         .lock()
-        .set_color(vga_buffer::Color::Black, vga_buffer::Color::White);
+        .set_color(io::vga_buffer::Color::Black, io::vga_buffer::Color::White);
     println!("This should be a different colour now");
     panic!("Test panic");
 }
