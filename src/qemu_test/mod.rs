@@ -26,7 +26,7 @@ fn panic(info: &PanicInfo) -> ! {
     crate::serial_println!("[failed]\n");
     crate::serial_println!("Error: {}", info);
     exit_qemu(QemuExitCode::Failed);
-    loop{}
+    loop {}
 }
 
 #[allow(dead_code)]
@@ -40,7 +40,7 @@ pub fn test_runner(tests: &[&dyn Testable]) {
 }
 
 pub trait Testable {
-    fn run(&self) -> ();
+    fn run(&self);
 }
 
 impl<T> Testable for T
