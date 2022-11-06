@@ -3,14 +3,18 @@
 #![feature(custom_test_frameworks)]
 #![test_runner(qemu_test::test_runner)]
 #![reexport_test_harness_main = "test_main"]
+#![feature(abi_x86_interrupt)]
 
 use frinux::*;
 
 // The entry point for the OS
 #[no_mangle]
 pub extern "C" fn _start() -> ! {
+    init();
     #[cfg(test)]
     test_main();
+
+    x86_64::instructions::interrupts::int3();
 
     println!("Yabba dabba doo!");
     io::vga_buffer::WRITER

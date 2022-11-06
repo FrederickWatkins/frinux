@@ -9,6 +9,7 @@ use frinux::*;
 // The entry point for the OS
 #[no_mangle]
 pub extern "C" fn _start() -> ! {
+    init();
     test_main();
 
     loop {}

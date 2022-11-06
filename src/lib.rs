@@ -3,10 +3,12 @@
 #![feature(custom_test_frameworks)]
 #![test_runner(qemu_test::test_runner)]
 #![reexport_test_harness_main = "test_main"]
+#![feature(abi_x86_interrupt)]
 
 #[cfg(not(test))]
 use core::panic::PanicInfo;
 
+pub mod interrupts;
 pub mod io;
 pub mod qemu_test;
 
@@ -14,8 +16,13 @@ pub mod qemu_test;
 #[cfg(test)]
 #[no_mangle]
 pub extern "C" fn _start() -> ! {
+    init();
     test_main();
     loop {}
+}
+
+pub fn init() {
+    interrupts::init_idt();
 }
 
 #[cfg(not(test))]
