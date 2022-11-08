@@ -8,6 +8,7 @@
 #[cfg(not(test))]
 use core::panic::PanicInfo;
 
+pub mod gdt;
 pub mod interrupts;
 pub mod io;
 pub mod qemu_test;
@@ -22,6 +23,7 @@ pub extern "C" fn _start() -> ! {
 }
 
 pub fn init() {
+    gdt::init();
     interrupts::init_idt();
 }
 
