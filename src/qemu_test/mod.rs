@@ -1,7 +1,7 @@
 #[cfg(test)]
 use core::panic::PanicInfo;
 
-mod serial;
+pub mod serial;
 
 #[allow(dead_code)]
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
