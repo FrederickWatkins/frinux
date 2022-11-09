@@ -9,4 +9,5 @@ pub static PICS: spin::Mutex<ChainedPics> =
 
 pub fn init() {
     unsafe { PICS.lock().initialize() };
+    x86_64::instructions::interrupts::enable();
 }
