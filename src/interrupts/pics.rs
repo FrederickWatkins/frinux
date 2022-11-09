@@ -8,5 +8,5 @@ pub static PICS: spin::Mutex<ChainedPics> =
     spin::Mutex::new(unsafe { ChainedPics::new(PIC_1_OFFSET, PIC_2_OFFSET) });
 
 pub fn init() {
-    /* TODO */
+    unsafe { PICS.lock().initialize() };
 }
