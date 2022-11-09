@@ -26,7 +26,7 @@ fn panic(info: &PanicInfo) -> ! {
     crate::serial_println!("[failed]\n");
     crate::serial_println!("Error: {}", info);
     exit_qemu(QemuExitCode::Failed);
-    loop {}
+    crate::halt_loop();
 }
 
 #[allow(dead_code)]

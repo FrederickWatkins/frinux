@@ -13,13 +13,6 @@ pub extern "C" fn _start() -> ! {
     init();
     #[cfg(test)]
     test_main();
-
-    x86_64::instructions::interrupts::int3();
-
-    println!("Yabba dabba doo!");
-    io::vga_buffer::WRITER
-        .lock()
-        .set_color(io::vga_buffer::Color::Black, io::vga_buffer::Color::White);
-    println!("This should be a different colour now");
-    panic!("Test panic");
+    
+    halt_loop();
 }
