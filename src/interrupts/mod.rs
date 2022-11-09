@@ -17,6 +17,7 @@ lazy_static! {
                 .set_handler_fn(exceptions::double_fault_handler)
                 .set_stack_index(gdt::DOUBLE_FAULT_IST_INDEX);
         }
+        idt[pics::InterruptIndex::Timer.as_usize()].set_handler_fn(pics::timer_handler);
         idt
     };
 }
