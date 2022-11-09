@@ -24,7 +24,7 @@ pub extern "C" fn _start() -> ! {
 
 pub fn init() {
     gdt::init();
-    interrupts::init_idt();
+    interrupts::init();
 }
 
 #[cfg(not(test))]
