@@ -1,4 +1,3 @@
-use crate::print;
 use pic8259::ChainedPics;
 use spin;
 use x86_64::structures::idt::InterruptStackFrame;
