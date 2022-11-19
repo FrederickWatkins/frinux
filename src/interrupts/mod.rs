@@ -18,6 +18,7 @@ lazy_static! {
                 .set_stack_index(gdt::DOUBLE_FAULT_IST_INDEX);
         }
         idt[pics::InterruptIndex::Timer.as_usize()].set_handler_fn(pics::timer_handler);
+        idt[pics::InterruptIndex::Keyboard.as_usize()].set_handler_fn(pics::keyboard_handler);
         idt
     };
 }
