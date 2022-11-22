@@ -13,6 +13,6 @@ pub extern "C" fn _start() -> ! {
     init();
     #[cfg(test)]
     test_main();
-    
+
     halt_loop();
 }

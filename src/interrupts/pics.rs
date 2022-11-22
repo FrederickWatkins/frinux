@@ -1,8 +1,8 @@
+use crate::print;
+use lazy_static::lazy_static;
 use pic8259::ChainedPics;
 use spin;
 use x86_64::structures::idt::InterruptStackFrame;
-use lazy_static::lazy_static;
-use crate::print;
 
 pub const PIC_1_OFFSET: u8 = 32;
 pub const PIC_2_OFFSET: u8 = PIC_1_OFFSET + 8;
@@ -44,10 +44,9 @@ pub extern "x86-interrupt" fn keyboard_handler(_stack_frame: InterruptStackFrame
     use x86_64::instructions::port::Port;
 
     lazy_static! {
-        static ref KEYBOARD: Mutex<Keyboard<layouts::Uk105Key, ScancodeSet1>> =
-            Mutex::new(Keyboard::new(layouts::Uk105Key, ScancodeSet1,
-                HandleControl::Ignore)
-            );
+        static ref KEYBOARD: Mutex<Keyboard<layouts::Uk105Key, ScancodeSet1>> = Mutex::new(
+            Keyboard::new(layouts::Uk105Key, ScancodeSet1, HandleControl::Ignore)
+        );
     }
 
     let mut keyboard = KEYBOARD.lock();
