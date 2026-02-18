@@ -1,29 +1,20 @@
 [package]
 name = "frinux"
 version = "0.1.0"
-edition = "2021"
-type = "bin"
+edition = "2024"
 
-[package.metadata.bootimage]
-test-args = [
-    "-device", "isa-debug-exit,iobase=0xf4,iosize=0x04",
-    "-serial", "stdio",
-    "-display", "none",
-]
-test-success-exit-code = 33     # (0x10 << 1) | 1
-
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+[[bin]]
+name = "frinux"
+test = false
+bench = false
 
 [dependencies]
-bootloader = "0.9.x"
-volatile = "0.2.6"
-spin = "0.9.4"
-lazy_static = { version = "1.4.0", features = ["spin_no_std"] }
-uart_16550 = "0.2.18"
-x86_64 = "0.14.10"
-pic8259 = "0.10.2"
-pc-keyboard = "0.5.x"
+heapless = "0.9.2"
+sbi = "0.3.0"
+spin = "0.10.0"
 
-[[test]]
-name = "stack_overflow"
-harness = false
+[profile.dev]
+panic = "abort"
+
+[profile.release]
+panic = "abort"
