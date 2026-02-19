@@ -3,9 +3,10 @@
 
 global_asm!(include_str!("entry.S"));
 
+mod interrupt;
+mod rv64_critical_section;
 mod uart;
 mod welcome;
-mod interrupt;
 
 use core::arch::{asm, global_asm};
 use core::panic::PanicInfo;
@@ -19,7 +20,12 @@ pub extern "C" fn _entry() -> ! {
     let mut input_buffer: Deque<u8, 256> = Deque::new();
     interrupt::init();
     welcome_message();
-    sbi::timer::set_timer(29450687).unwrap();
+    unsafe {
+        register::sie::enable(riscv::interrupt::Interrupt::SupervisorTimer);
+        register::sstatus::set_sie();
+    }
+    let now = riscv::register::time::read();
+    sbi::timer::set_timer((now + 10000000) as u64).unwrap();
     loop {
         if let Some(c) = uart::read_byte() {
             print!("{}", char::from(c));
@@ -34,11 +40,12 @@ pub extern "C" fn _entry() -> ! {
                     println!("Hello world!");
                 } else if s.contains("TIME") {
                     println!("Current time: {}", register::time::read64());
+                } else if s.contains("KYS") {
+                    unsafe { asm!("li t1, 0xDEADBEEF", "amoadd.w zero, t2, (t1)",) }
                 } else if s.contains("BREAK") {
-                    unsafe{asm!(
-                        "ebreak",
-                    )}
+                    unsafe { asm!("ebreak") }
                 }
+                input_buffer.clear();
             }
         }
     }
@@ -46,7 +53,10 @@ pub extern "C" fn _entry() -> ! {
 
 #[panic_handler]
 fn panic(info: &PanicInfo) -> ! {
-    println!("\x1b[31mkernel panic!\x1b[0m");
+    unsafe {
+        uart::force_unlock();
+    }
+    println!("\x1b[H\x1b[2J\x1b[31mkernel panic!\x1b[0m");
     print!("{}", info.message());
     if let Some(location) = info.location() {
         println!("@{location}");

@@ -51,5 +51,11 @@ macro_rules! println {
 #[doc(hidden)]
 pub fn _print(args: fmt::Arguments) {
     use core::fmt::Write;
-    UART.lock().write_fmt(args).unwrap();
+    critical_section::with(|_| UART.lock().write_fmt(args).unwrap());
+}
+
+pub unsafe fn force_unlock() {
+    unsafe {
+        UART.force_unlock();
+    }
 }

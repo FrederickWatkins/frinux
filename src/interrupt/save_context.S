@@ -17,3 +17,4 @@ addi sp, sp, 8
 3:
 addi sp, sp, -FRAME_SIZE
 SAVE_ALL_GPRS
+mv a0, sp

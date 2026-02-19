@@ -24,8 +24,10 @@ checksum = "361a90feb7004eca4019fb28352a9465666b24f840f5c3cddf0ff13920590b89"
 name = "frinux"
 version = "0.1.0"
 dependencies = [
+ "critical-section",
  "heapless",
  "riscv",
+ "rvdc",
  "sbi",
  "spin",
 ]
@@ -111,6 +113,12 @@ name = "riscv-types"
 version = "0.1.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "d3f2ad9f15a07f4a0e1677124f9120ce7e83ab7e1ca7186af0ca9da529b62e80"
+
+[[package]]
+name = "rvdc"
+version = "0.1.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "6fcb268e837fc930a35c7bd6585466b6358b0a696627b174caf4ac80a9a13d8b"
 
 [[package]]
 name = "sbi"
