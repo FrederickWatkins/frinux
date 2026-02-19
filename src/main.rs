@@ -5,17 +5,21 @@ global_asm!(include_str!("entry.S"));
 
 mod uart;
 mod welcome;
+mod interrupt;
 
-use core::arch::global_asm;
+use core::arch::{asm, global_asm};
 use core::panic::PanicInfo;
 use heapless::Deque;
+use riscv::register;
 
 use crate::welcome::welcome_message;
 
 #[unsafe(no_mangle)]
 pub extern "C" fn _entry() -> ! {
     let mut input_buffer: Deque<u8, 256> = Deque::new();
+    interrupt::init();
     welcome_message();
+    sbi::timer::set_timer(29450687).unwrap();
     loop {
         if let Some(c) = uart::read_byte() {
             print!("{}", char::from(c));
@@ -28,6 +32,12 @@ pub extern "C" fn _entry() -> ! {
                     panic!("Asked to panic")
                 } else if s.contains("HELLO COMPUTER") {
                     println!("Hello world!");
+                } else if s.contains("TIME") {
+                    println!("Current time: {}", register::time::read64());
+                } else if s.contains("BREAK") {
+                    unsafe{asm!(
+                        "ebreak",
+                    )}
                 }
             }
         }
