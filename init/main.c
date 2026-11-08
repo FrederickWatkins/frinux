@@ -28,6 +28,7 @@ void kmain(unsigned long hartid, void *dtb)
     kprint("Hello World!\n");
     kprint("Hart ID: %lu\n", hartid);
     kprint("DTB location: %p\n", dtb);
+    kprint("Size of ptr: %zu\n", sizeof((void*) NULL));
     
     for (;;)
         __asm__ volatile("wfi");

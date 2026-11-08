@@ -1,0 +1,26 @@
+#
+# Kernel build configuration (RISC-V default)
+#
+CONFIG_ARCH="riscv"
+ 
+# Toolchain: GCC or LLVM
+CONFIG_TOOLCHAIN=GCC
+ 
+# Only used with GCC
+CONFIG_CROSS_COMPILE="riscv64-unknown-elf-"
+ 
+#
+# RISC-V options
+#
+CONFIG_64BIT=y
+CONFIG_RISCV_ISA_M=y
+CONFIG_RISCV_ISA_A=y
+CONFIG_RISCV_ISA_C=y
+ 
+#
+# Compiler options
+#
+CONFIG_OPTIMIZE="-O2"
+CONFIG_DEBUG_INFO=y
+# CONFIG_WERROR is not set
+ 

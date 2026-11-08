@@ -5,6 +5,8 @@
  *   S-mode, MMU off, a0 = hartid, a1 = DTB physical address.
  */
 
+#include <asm/asm.h>
+
     .section .head.text, "ax"
     .global _start
 _start:
@@ -14,7 +16,11 @@ _start:
     j _start_kernel
     nop
     .option pop
-    .dword 0x200000    /* text_offset: RAM base + 2MB */
+#if __riscv_xlen == 64
+    .dword 0x200000        /* text_offset: RAM base + 2MB */
+#else
+    .dword 0x400000        /* text_offset: RAM base + 4MB */
+#endif
     .dword __image_size    /* image_size, including BSS (from linker.ld) */
     .dword 0    /* flags: little-endian */
     .word 0x2    /* version 0.2 */
@@ -30,7 +36,7 @@ _start_kernel:
     la t1, __bss_end
 1:
     bgeu t0, t1, 2f
-    sd zero, 0(t0)
+    S_REG zero, 0(t0)
     addi t0, t0, 8
     j 1b
 2:

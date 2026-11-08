@@ -1,5 +1,5 @@
-#ifndef KPRINT_H
-#define KPRINT_H
+#ifndef KERNEL_KPRINT_H
+#define KERNEL_KPRINT_H
 
 #include <stdarg.h>
 #include <stddef.h>
@@ -30,4 +30,4 @@ int _kprint(const char* fmt, ...) __attribute__((format(printf, 1, 2)));
 
 int _kprint_force(const char* fmt, ...) __attribute((format(printf, 1, 2)));
 
-#endif /* KPRINT_H */
+#endif /* KERNEL_KPRINT_H */
