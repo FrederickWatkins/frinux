@@ -30,4 +30,5 @@ ARCH_LDFLAGS := -Wl,--no-relax
 
 QEMU := qemu-system-riscv$(riscv_xlen) -machine virt -nographic -bios default
 
-CONFIG_OF=y
+# Required config for RISCV
+CONFIG_LIBFDT := y
