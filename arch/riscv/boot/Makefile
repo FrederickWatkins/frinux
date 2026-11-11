@@ -1,1 +1,1 @@
-obj-y += head.o
+obj-y += head.o setup_vm.o

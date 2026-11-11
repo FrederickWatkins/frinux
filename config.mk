@@ -6,7 +6,7 @@
 TOOLCHAIN := $(patsubst "%",%,$(strip $(CONFIG_TOOLCHAIN)))
 OPTIMIZE  := $(patsubst "%",%,$(strip $(CONFIG_OPTIMIZE)))
 
-LDS := arch/$(ARCH)/boot/linker.ld
+LDS := $(BUILD)/arch/$(ARCH)/linker.ld
 
 # ---- toolchain selection ----
 ifeq ($(TOOLCHAIN),LLVM)

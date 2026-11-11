@@ -1,1 +1,1 @@
-subdir-y += boot kernel
+subdir-y += boot kernel mm

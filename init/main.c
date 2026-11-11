@@ -2,6 +2,7 @@
 #include <kernel/kprint.h>
 #include <kernel/console.h>
 #include <kernel/libfdt.h>
+#include <asm/page.h>
 
 static void indent(int depth)
 {
@@ -98,6 +99,7 @@ static void uart_putc(char c, void *base_addr)
     uart[0] = (unsigned char)c;
 }
 
+__attribute__((section(".kmain.text")))
 void kmain(unsigned long hartid, void *dtb)
 {
     struct spinlock uart_lock;
@@ -115,6 +117,7 @@ void kmain(unsigned long hartid, void *dtb)
     kprint("Hello World!\n");
     kprint("Hart ID: %lu\n", hartid);
     kprint("DTB location: %p\n", dtb);
+    kprint("DTB location (virt): %p\n", _va(dtb));
     kprint("Size of ptr: %zu\n", sizeof((void*) NULL));
 
     

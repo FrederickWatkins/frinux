@@ -89,6 +89,10 @@ $(BUILD)/%.o: %.S $(CONFIG_DEPS)
 	@mkdir -p $(dir $@)
 	$(CC) $(CFLAGS) -c $< -o $@
 
+$(BUILD)/%.ld:: %.ld.S $(CONFIG_DEPS)
+	@mkdir -p $(dir $@)
+	$(CC) $(CFLAGS) -E -P -x c -D__LINKER__ $< -o $@
+
 $(BUILD)/kernel.elf: $(OBJS) $(LDS) $(BUILTINS)
 	$(CC) $(CFLAGS) $(LDFLAGS) $(OBJS) $(BUILTINS) -o $@
 
